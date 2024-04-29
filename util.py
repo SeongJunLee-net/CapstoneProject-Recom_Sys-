@@ -11,69 +11,69 @@ tokenizer = RobertaTokenizer.from_pretrained(model_name)
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 roberta = RobertaModel.from_pretrained(model_name).to(device)
 
-path = 'C:\\CapstoneProject\\ThirdModel'
-with open(path+'\\Kor2EngPickle\\big_company_dict.pkl','rb') as f:
+path = '.'
+with open(path+'/Kor2EngPickle/big_company_dict.pkl','rb') as f:
     big_company_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\mid_company_dict.pkl','rb') as f:
+with open(path+'/Kor2EngPickle/mid_company_dict.pkl','rb') as f:
     mid_company_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\company_kind_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/company_kind_dict.pickle','rb') as f:
     company_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\company_scale_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/company_scale_dict.pickle','rb') as f:
     company_scale_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\education_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/education_dict.pickle','rb') as f:
     education_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\field_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/field_dict.pickle','rb') as f:
     field_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\job_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/job_dict.pickle','rb') as f:
     job_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\major_dict_revise.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/major_dict_revise.pickle','rb') as f:
     major_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\univ_day_night_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/univ_day_night_dict.pickle','rb') as f:
     univ_day_night_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\univ_kind_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/univ_kind_dict.pickle','rb') as f:
     univ_kind_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\univ_loc_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/univ_loc_dict.pickle','rb') as f:
     univ_loc_trans = pickle.load(f)
-with open(path+'\\Kor2EngPickle\\univ_main_branch_dict.pickle','rb') as f:
+with open(path+'/Kor2EngPickle/univ_main_branch_dict.pickle','rb') as f:
     univ_main_branch_trans = pickle.load(f)
 
 
-with open(path+'\\Eng2KorPickle\\big_company_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/big_company_dict_reverse.pkl','rb') as f:
     big_company_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\mid_company_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/mid_company_dict_reverse.pkl','rb') as f:
     mid_company_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\company_kind_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/company_kind_dict_reverse.pkl','rb') as f:
     company_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\company_scale_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/company_scale_dict_reverse.pkl','rb') as f:
     company_scale_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\education_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/education_dict_reverse.pkl','rb') as f:
     education_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\field_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/field_dict_reverse.pkl','rb') as f:
     field_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\job_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/job_dict_reverse.pkl','rb') as f:
     job_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\major_dict_revise_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/major_dict_revise_reverse.pkl','rb') as f:
     major_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\univ_day_night_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/univ_day_night_dict_reverse.pkl','rb') as f:
     univ_day_night_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\univ_kind_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/univ_kind_dict_reverse.pkl','rb') as f:
     univ_kind_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\univ_loc_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/univ_loc_dict_reverse.pkl','rb') as f:
     univ_loc_trans_E = pickle.load(f)
-with open(path+'\\Eng2KorPickle\\univ_main_branch_dict_reverse.pkl','rb') as f:
+with open(path+'/Eng2KorPickle/univ_main_branch_dict_reverse.pkl','rb') as f:
     univ_main_branch_trans_E = pickle.load(f)
 
 
 
 def data_init(data_name:str):
-    path = 'C:\\CapstoneProject\\ThirdModel'
-    data = pd.read_csv(path+f'\\{data_name}.csv')
+    path = './'
+    data = pd.read_csv(path+f'{data_name}.csv')
     return data
 
 def find_user_group(user_info:pd.DataFrame, data : pd.DataFrame):
-    # data = data.rename(columns={'index':'id'}) # ÃßÈÄ µ¥ÀÌÅÍ ÀÚÃ¼¿¡¼­ ¼öÁ¤ÇØ¾ßÇÒ »çÇ×
-    user_job = user_info['job'].item() # student_job->job ¼öÁ¤
-    user_group = user_info['group'].item() # student_group->group¼öÁ¤
+    # data = data.rename(columns={'index':'id'}) # ì¶”í›„ ë°ì´í„° ìžì²´ì—ì„œ ìˆ˜ì •í•´ì•¼í•  ì‚¬í•­
+    user_job = user_info['job'].item() # student_job->job ìˆ˜ì •
+    user_group = user_info['group'].item() # student_group->groupìˆ˜ì •
     group_condition = (data['group'] == user_group)
     return_group_data = copy.deepcopy(data.loc[group_condition])
     job_condition = (return_group_data['job'] == user_job)

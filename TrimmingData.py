@@ -7,7 +7,7 @@ import torch.nn.functional as F
 
 
 class DataComparison():
-    path = "C:\\CapstoneProject\\SecondModel\\"    
+    path = "./"    
     with open(path+'big_company_kind_vec_dict.pkl','rb') as f:
         big_company_kind_vec_dict = pickle.load(f)
     with open(path+'mid_company_kind_vec_dict.pkl','rb') as f:

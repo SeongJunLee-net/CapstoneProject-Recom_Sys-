@@ -8,7 +8,7 @@ import TrimmingData as TrimmingData
 from flask import Flask, request
 import json
 
-path = 'C:\\CapstoneProject\\SecondModel\\1stmodelstate.h5'
+path = './1stmodelstate.h5'
 model_params = torch.load(path,map_location=torch.device('cpu'))
 model = FirstModel.BaseModel()
 model.load_state_dict(model_params)

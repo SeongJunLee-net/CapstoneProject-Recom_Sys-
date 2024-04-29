@@ -32,9 +32,9 @@ def initialization():
         user_type = request.args.get('user_type','student')
 
         if user_type=='student':
-            total_data = student_total_data
-        else:
             total_data = consultant_total_data
+        else:
+            total_data = student_total_data
 
         user_data = request.get_json()
         user_df = pd.DataFrame([user_data],index=[0])

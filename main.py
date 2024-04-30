@@ -23,9 +23,9 @@ np.random.seed(seed)
 app = Flask(__name__)
 
 
-@app.route("/", methods=['GET'])
+@app.route("/", methods=['POST'])
 def initialization():
-    if request.method == 'GET':
+    if request.method == 'POST':
 
         show_num = int(request.args.get('show',100))
         page = int(request.args.get('page',1))
@@ -77,9 +77,9 @@ def initialization():
 
     return "successfully"
 
-@app.route("/update",methods=['GET'])
+@app.route("/update",methods=['POST'])
 def update():
-    if request.method == 'GET':
+    if request.method == 'POST':
         # 진성이가 index +9000해서 보내줌
         # 회원가입할떄 수정됨
         update_user_data = request.get_json()

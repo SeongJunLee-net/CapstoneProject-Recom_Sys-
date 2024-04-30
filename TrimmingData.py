@@ -91,29 +91,29 @@ class DataComparison():
     
     def update_dict(cls,dict_tup:tuple):
         path = cls.path
-        big_company_kind_vec_dict.update(dict_tup[0])
+        cls.big_company_kind_vec_dict.update(dict_tup[0])
         with open(path+'big_company_kind_vec_dict.pkl','wb') as f:
-            pickle.dump(big_company_kind_vec_dict,f)
+            pickle.dump(cls.big_company_kind_vec_dict,f)
 
-        mid_company_kind_vec_dict.update(dict_tup[1]) 
+        cls.mid_company_kind_vec_dict.update(dict_tup[1]) 
         with open(path+'mid_company_kind_vec_dict.pkl','wb') as f:
-            pickle.dump(mid_company_kind_vec_dict,f)
+            pickle.dump(cls.mid_company_kind_vec_dict,f)
 
-        company_kind_vec_dict.update(dict_tup[2])
+        cls.company_kind_vec_dict.update(dict_tup[2])
         with open(path+'company_kind_vec_dict.pkl','wb') as f:
-            pickle.dump(company_kind_vec_dict,f)
+            pickle.dump(cls.company_kind_vec_dict,f)
 
-        major_vec_dict.update(dict_tup[3])
+        cls.major_vec_dict.update(dict_tup[3])
         with open(path+'major_vec_dict.pkl','wb') as f:
-            major_vec_dict = pickle.dump(major_vec_dict,f)
+            pickle.dump(cls.major_vec_dict,f)
 
-        job_vec_dict.update(dict_tup[4])
+        cls.job_vec_dict.update(dict_tup[4])
         with open(path+'job_vec_dict.pkl','wb') as f:
-            job_vec_dict = pickle.dump(job_vec_dict,f)
+            pickle.dump(cls.job_vec_dict,f)
 
-        field_vec_dict.update(dict_tup[5])
+        cls.field_vec_dict.update(dict_tup[5])
         with open(path+'field_vec_dict.pkl','wb') as f:
-            field_vec_dict = pickle.dump(field_vec_dict,f)
+            pickle.dump(cls.field_vec_dict,f)
 
     # def update_dict(cls,dict_tup:tuple):
     #     path = cls.path

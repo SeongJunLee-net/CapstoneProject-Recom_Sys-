@@ -91,40 +91,28 @@ class DataComparison():
     
     def update_dict(cls,dict_tup:tuple):
         path = cls.path
-        with open(path+'big_company_kind_vec_dict.pkl','rb') as f:
-            big_company_kind_dict = pickle.load(f)
+        big_company_kind_vec_dict.update(dict_tup[0])
         with open(path+'big_company_kind_vec_dict.pkl','wb') as f:
-            big_company_kind_dict.update(dict_tup[0])
-            pickle.dump(big_company_kind_dict,f)
+            pickle.dump(big_company_kind_vec_dict,f)
 
-        with open(path+'mid_company_kind_vec_dict.pkl','rb') as f:
-            mid_company_kind_vec_dict = pickle.load(f)
+        mid_company_kind_vec_dict.update(dict_tup[1]) 
         with open(path+'mid_company_kind_vec_dict.pkl','wb') as f:
-            mid_company_kind_vec_dict.update(dict_tup[1])
             pickle.dump(mid_company_kind_vec_dict,f)
 
-        with open(path+'company_kind_vec_dict.pkl','rb') as f:
-            company_kind_vec_dict = pickle.load(f)
+        company_kind_vec_dict.update(dict_tup[2])
         with open(path+'company_kind_vec_dict.pkl','wb') as f:
-            company_kind_vec_dict.update(dict_tup[2])
             pickle.dump(company_kind_vec_dict,f)
 
-        with open(path+'major_vec_dict.pkl','rb') as f:
-            major_vec_dict = pickle.load(f)
+        major_vec_dict.update(dict_tup[3])
         with open(path+'major_vec_dict.pkl','wb') as f:
-            major_vec_dict.update(dict_tup[3])
             major_vec_dict = pickle.dump(major_vec_dict,f)
 
-        with open(path+'job_vec_dict.pkl','rb') as f:
-            job_vec_dict = pickle.load(f)
+        job_vec_dict.update(dict_tup[4])
         with open(path+'job_vec_dict.pkl','wb') as f:
-            job_vec_dict.update(dict_tup[4])
             job_vec_dict = pickle.dump(job_vec_dict,f)
-        
-        with open(path+'field_vec_dict.pkl','rb') as f:
-            field_vec_dict = pickle.load(f)
+
+        field_vec_dict.update(dict_tup[5])
         with open(path+'field_vec_dict.pkl','wb') as f:
-            field_vec_dict.update(dict_tup[5])
             field_vec_dict = pickle.dump(field_vec_dict,f)
 
     # def update_dict(cls,dict_tup:tuple):

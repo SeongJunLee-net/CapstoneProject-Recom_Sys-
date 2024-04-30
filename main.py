@@ -77,9 +77,9 @@ def initialization():
 
     return "successfully"
 
-@app.route("/update",methods=['GET'])
+@app.route("/update",methods=['POST'])
 def update():
-    if request.method == 'GET':
+    if request.method == 'POST':
         # 진성이가 index +9000해서 보내줌
         # 회원가입할떄 수정됨
         update_user_data = request.get_json()
@@ -87,6 +87,7 @@ def update():
         update_user_df = util.Kor2Eng(update_user_df)        
         return_data_tup = util.make_data(update_user_df)
         DC.update_dict(return_data_tup)
+        return "successfully"
     return "successfully"
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000,debug = True)

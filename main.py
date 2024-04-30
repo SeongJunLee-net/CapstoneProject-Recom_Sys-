@@ -77,9 +77,9 @@ def initialization():
 
     return "successfully"
 
-@app.route("/update",methods=['POST'])
+@app.route("/update",methods=['GET'])
 def update():
-    if request.method == 'POST':
+    if request.method == 'GET':
         # 진성이가 index +9000해서 보내줌
         # 회원가입할떄 수정됨
         update_user_data = request.get_json()

@@ -6,7 +6,7 @@ import FirstModel
 import util
 import TrimmingData as TrimmingData
 import json
-from captum.attr import IntegratedGradiets
+from captum.attr import IntegratedGradients
 from flask import Flask, request
 
 path = './1stmodelstate.h5'

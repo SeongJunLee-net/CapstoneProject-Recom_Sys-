@@ -5,13 +5,15 @@ import numpy as np
 import FirstModel
 import util
 import TrimmingData as TrimmingData
-from flask import Flask, request
 import json
+from captum.attr import IntegratedGradiets
+from flask import Flask, request
 
 path = './1stmodelstate.h5'
 model_params = torch.load(path,map_location=torch.device('cpu'))
 model = FirstModel.BaseModel()
 model.load_state_dict(model_params)
+ig = IntegratedGradients(model)
 
 consultant_data_name = "consultant" 
 student_data_name = "student"
@@ -21,7 +23,6 @@ DC = TrimmingData.DataComparison()
 seed = 201900278
 np.random.seed(seed)
 app = Flask(__name__)
-
 
 @app.route("/", methods=['POST'])
 def initialization():
@@ -60,11 +61,29 @@ def initialization():
         score_list = []
 
         input_data = torch.FloatTensor(DC.prepare_data(user_df,first_candidate_df).values)
-        score = model(input_data)
-        
-        score = score.view(-1).detach().numpy()
-        first_candidate_df['score'] = score
 
+        total_attr = ig.attribute(input_data)
+        company_index = [1,2,9,10,11]
+        univ_index = [3,4,5,6,7,8,12,14]
+        job_index = [13]
+
+        company_attr = (total_attr[:,company_index].sum(axis=1))/len(company_index)
+        univ_attr = (total_attr[:,univ_index].sum(axis=1))/len(univ_index)
+        job_attr = (total_attr[:,job_index].sum(axis=1))/len(job_index)
+
+        company_attr = company_attr.detach().numpy()
+        univ_attr = univ_attr.detach().numpy()
+        job_attr = job_attr.detach().numpy()
+        
+        score = model(input_data)
+        score = score.view(-1).detach().numpy()
+        
+        first_candidate_df['score'] = score
+        first_candidate_df['company_feat_attr'] = company_attr
+        first_candidate_df['univ_feat_attr'] = univ_attr
+        first_candidate_df['job_feat_attr'] = job_attr
+        
+        
         return_df = first_candidate_df.sort_values(by='score',ascending = False)
         return_df = util.Eng2Kor(return_df)
         result = []

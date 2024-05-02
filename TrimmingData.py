@@ -20,6 +20,8 @@ class DataComparison():
         field_vec_dict = pickle.load(f)
     with open(path+'major_vec_dict.pkl','rb') as f:
         major_vec_dict = pickle.load(f)
+    with open(path+'check_update.pkl','rb') as f:
+        check_update_dict = pickle.load(f) 
     def __init__(self):
         self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
         
@@ -97,6 +99,7 @@ class DataComparison():
         cls.major_vec_dict.update(dict_tup[3])
         cls.job_vec_dict.update(dict_tup[4])
         cls.field_vec_dict.update(dict_tup[5])
+        
 
     
 

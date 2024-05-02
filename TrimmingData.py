@@ -91,7 +91,7 @@ class DataComparison():
         result = result.astype(float)
         return result
     
-    def update_dict(cls,dict_tup:tuple):
+    def update_dict(cls,dict_tup:tuple,user_index : int):
         path = cls.path
         cls.big_company_kind_vec_dict.update(dict_tup[0])
         cls.mid_company_kind_vec_dict.update(dict_tup[1]) 
@@ -99,10 +99,30 @@ class DataComparison():
         cls.major_vec_dict.update(dict_tup[3])
         cls.job_vec_dict.update(dict_tup[4])
         cls.field_vec_dict.update(dict_tup[5])
-        
+        cls.check_update_dict[user_index] = {
+            "big_company_kind_vec":dict_tup[0],
+            "mid_company_kind_vec":dict_tup[1],
+            "company_kind_vec":dict_tup[2],
+            "major_vec":dict_tup[3],
+            "job_vec":dict_tup[4],
+            "field_vec":dict_tup[5],
+        }
+        with open(path+'check_update.pkl','wb') as f:
+            pickle.dump(cls.check_update_dict,f)
 
-    
-
+    def total_update(cls):
+        with open(path+'big_company_kind_vec_dict.pkl','wb') as f:
+            pickle.dump(cls.big_company_kind_vec_dict,f)
+        with open(path+'mid_company_kind_vec_dict.pkl','wb') as f:
+            pickle.dump(cls.mid_company_kind_vec_dict,f)
+        with open(path+'company_kind_vec_dict.pkl','wb') as f:
+            pickle.dump(cls.company_kind_vec_dict,f)
+        with open(path+'major_vec_dict.pkl','wb') as f:
+            pickle.dump(cls.major_vec_dict,f)
+        with open(path+'job_vec_dict.pkl','wb') as f:
+            pickle.dump(cls.job_vec_dict,f)
+        with open(path+'field_vec_dict.pkl','wb') as f:
+            pickle.dump(cls.field_vec_dict,f)
     # def update_dict(cls,dict_tup:tuple):
     #     path = cls.path
     #     with open(path+'check_update.pkl','rb') as f:

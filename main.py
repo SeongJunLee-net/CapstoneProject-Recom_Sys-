@@ -89,6 +89,17 @@ def update():
         DC.update_dict(return_data_tup)
         return "successfully"
     return "successfully"
+
+@app.route("/total_update",methods = ['GET'])
+def total_update():
+    if request.method == 'GET':
+        # 현재 Dictionary Update
+        # 중간에 서버가 꺼지면 날라갈 위험이 있음
+        # check_update.pkl로 이를 방지
+        DC.total_update_dict()
+    return "successfully"
+        
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000,debug = True)
 

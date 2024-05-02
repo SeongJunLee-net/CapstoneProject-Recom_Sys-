@@ -111,7 +111,7 @@ def update():
         update_user_df = pd.DataFrame([update_user_data])
         update_user_df = util.Kor2Eng(update_user_df)        
         return_data_tup = util.make_data(update_user_df)
-        DC.update_dict(return_data_tup,update_user_df['index'])
+        DC.update_dict(return_data_tup,update_user_df['index'].item())
         return "successfully"
     return "successfully"
 

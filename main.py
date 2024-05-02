@@ -71,9 +71,9 @@ def initialization():
         univ_attr = (total_attr[:,univ_index].sum(axis=1))/len(univ_index)
         job_attr = (total_attr[:,job_index].sum(axis=1))/len(job_index)
 
-        company_attr = company_attr.detach().numpy()
-        univ_attr = univ_attr.detach().numpy()
-        job_attr = job_attr.detach().numpy()
+        company_attr = company_attr.abs().detach().numpy()
+        univ_attr = univ_attr.abs().detach().numpy()
+        job_attr = job_attr.abs().detach().numpy()
         
         score = model(input_data)
         score = score.view(-1).detach().numpy()

@@ -70,19 +70,60 @@ def data_init(data_name:str):
     data = pd.read_csv(path+f'{data_name}.csv')
     return data
 
-def find_user_group(user_info:pd.DataFrame, data : pd.DataFrame):
-    # data = data.rename(columns={'index':'id'}) # 추후 데이터 자체에서 수정해야할 사항
-    user_job = user_info['job'].item() # student_job->job 수정
-    user_group = user_info['group'].item() # student_group->group수정
-    group_condition = (data['group'] == user_group)
-    return_group_data = copy.deepcopy(data.loc[group_condition])
-    job_condition = (return_group_data['job'] == user_job)
+def find_user_group(user_info:pd.DataFrame, data : pd.DataFrame,
+                     univ_rate:int,company_rate:int,job_rate:int):    
+    np.random.seed(seed)
+    # total_rate = 3
+    # user_job = user_info['job'].item()
+    user_company_name = user_info['company_name'].item()
+    user_company_kind = user_info['company_kind'].item() 
+    user_univ_name = user_info['univ_name'].item()
+    user_major = user_info['major'].item()
+    user_group = user_info['group'].item() 
     
-    return_job_data = copy.deepcopy(return_group_data.loc[job_condition])
-    return_group_data.drop(index=return_job_data.index, inplace = True)
-    return_data = pd.concat([return_job_data,return_group_data],axis=0,ignore_index=True)
+    group_condition = (data['group'] == user_group)
+    univ_condition = (data['univ_name'] == user_univ_name)
+    company_name_condition = (data['company_name'] == user_company_name)
+    major_condition = (data['major']==user_major)
+    company_kind_condition = (data['company_kind']==user_company_kind)
 
+
+    
+    group_data = copy.deepcopy(data.loc[group_condition])
+    #return_group_data = group_data.sample(frac = job_rate/total_rate)
+    
+    univ_data = copy.deepcopy(data.loc[univ_condition])
+    #return_univ_data = univ_data.sample(frac = univ_rate/total_rate)
+    
+    company_data = copy.deepcopy(data.loc[company_name_condition])
+    #return_company_data = company_data.sample(frac = company_rate/total_rate)
+    
+    major_data = copy.deepcopy(data.loc[major_condition])
+
+    company_kind_data = copy.deepcopy(data.loc[company_kind_condition])
+
+    candidate_data = [(company_rate,company_kind_data),(univ_rate,major_data),
+                      (job_rate,group_data),(company_rate,company_data),
+                      (univ_rate,univ_data)]
+    candidate_data.sort(key=lambda x:x[0],reverse=True)
+    candidate_data = [df[1] for df in candidate_data]
+
+    #return_data = pd.concat([return_group_data,return_univ_data,return_company_data],axis=0,ignore_index=True)
+    #return_data.drop_duplicates(inplace=True)
+
+    #drop_idx = return_data.index
+    candidate_data = pd.concat(candidate_data,axis=0,ignore_index=True)
+    candidate_data.drop_duplicates(inplace=True)
+    #candidate_data.drop(index=drop_idx,inplace=True)
+
+    #return_data = return_data.sample(frac=1)
+    #return_data = pd.concat([return_data,candidate_data],axis=0,ignore_index=True)
+    ## return_job_data = copy.deepcopy(return_group_data.loc[job_condition])
+    ## return_group_data.drop(index=return_job_data.index, inplace = True)
+    ## return_data = pd.concat([return_job_data,return_group_data],axis=0,ignore_index=True)
+    return_data = candidate_data
     return return_data
+
 
 def make_vector(keyword : str, elem : str):
     if keyword == "company":

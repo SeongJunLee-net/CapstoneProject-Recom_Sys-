@@ -32,6 +32,11 @@ def initialization():
         page = int(request.args.get('page',1))
         user_type = request.args.get('user_type','student')
 
+        max_rate = 2
+        univ_rate = int(request.args.get('univ_rate',1))
+        company_rate = int(request.args.get('company_rate',1))
+        job_rate = int(request.args.get('job_rate',1))
+
         if user_type=='student':
             total_data = consultant_total_data
         else:
@@ -42,7 +47,8 @@ def initialization():
         user_df = util.Kor2Eng(user_df)
 
         # 상담자 데이터를 같은 그룹인 데이터를 뽑아낸후 같은 직업을 앞에오게끔 구성
-        ordered_user_df = util.find_user_group(user_info=user_df, data=total_data)
+        ordered_user_df = util.find_user_group(user_info=user_df, data=total_data,
+                                               univ_rate = univ_rate, company_rate=company_rate, job_rate=job_rate)        
         
         if len(ordered_user_df)==0:
             return "No candidate"
@@ -62,14 +68,19 @@ def initialization():
 
         input_data = torch.FloatTensor(DC.prepare_data(user_df,first_candidate_df).values)
 
-        total_attr = ig.attribute(input_data)
         company_index = [1,2,9,10,11]
         univ_index = [3,4,5,6,7,8,12,14]
         job_index = [13]
 
-        company_attr = (total_attr[:,company_index].abs().sum(axis=1))/len(company_index)
-        univ_attr = (total_attr[:,univ_index].abs().sum(axis=1))/len(univ_index)
-        job_attr = (total_attr[:,job_index].abs().sum(axis=1))/len(job_index)
+        input_data[:,company_index] = input_data[:,company_index]*(company_rate/max_rate)
+        input_data[:,univ_index] = input_data[:,univ_index]*(univ_rate/max_rate)
+        input_data[:,job_index] = input_data[:,job_index]*(job_rate/max_rate)
+
+        total_attr = ig.attribute(input_data)
+
+        company_attr = (total_attr[:,company_index].sum(axis=1)).abs()/len(company_index)
+        univ_attr = (total_attr[:,univ_index].sum(axis=1)).abs()/len(univ_index)
+        job_attr = (total_attr[:,job_index].sum(axis=1)).abs()/len(job_index)
 
         summation = company_attr+univ_attr+job_attr
 
@@ -121,7 +132,7 @@ def total_update():
         # 현재 Dictionary Update
         # 중간에 서버가 꺼지면 날라갈 위험이 있음
         # check_update.pkl로 이를 방지
-        DC.total_update_dict()
+        DC.total_update()
     return "successfully"
         
 

@@ -10,6 +10,7 @@ model_name = 'roberta-base'
 tokenizer = RobertaTokenizer.from_pretrained(model_name)
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 roberta = RobertaModel.from_pretrained(model_name).to(device)
+seed = 201900278
 
 path = '.'
 with open(path+'/Kor2EngPickle/big_company_dict.pkl','rb') as f:
